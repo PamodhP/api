@@ -27,10 +27,10 @@ public class PaymentsTests extends BaseAPI {
 
     @Test
     public void customerTest() {
-        Response response = getCustomerCall(Constants.STAFF, "2558");
+        Response response = getCustomerCall(Constants.STAFF, "786504");
         verify.StatusCodeShouldHave(response, 200);
         JSONObject jResponse = new JSONObject(response.body().asString());
-        verify.VerifyCustomerInfo(jResponse, "2558");
+        verify.VerifyCustomerInfo(jResponse, "786504");
     }
 
     @Test
@@ -44,5 +44,11 @@ public class PaymentsTests extends BaseAPI {
         Response response = new BaseAPI_BDD().postJsonPayload();
         AuthModel authModel = response.as(AuthModel.class);
         System.out.println(authModel.getAccess_token());
+    }
+
+    @Test
+    public void paymentSubmissionTest() {
+        Response response = getPostPaymentSubmission(Constants.STAFF, "786504");
+        System.out.println(response.getStatusCode());
     }
 }
