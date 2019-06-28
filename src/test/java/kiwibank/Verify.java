@@ -1,7 +1,6 @@
 package kiwibank;
 
 import io.restassured.response.Response;
-
 import org.json.JSONObject;
 import org.testng.asserts.SoftAssert;
 
@@ -20,6 +19,7 @@ public class Verify {
 
         softAssert = new SoftAssert();
         softAssert.assertEquals(jsonObject.getJSONObject("customer").get("customerId"), accessNumber);
+        //jsonObject.getJSONObject("customer").getJSONArray("addresses").getJSONObject(1).get("addressType");
         softAssert.assertAll();
 
 
