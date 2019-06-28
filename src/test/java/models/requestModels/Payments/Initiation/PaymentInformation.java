@@ -1,4 +1,6 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
+
+import models.requestModels.Payments.PaymentAmount;
 
 public class PaymentInformation {
     private String PaymentType;
@@ -7,7 +9,7 @@ public class PaymentInformation {
 
     private String PaymentValueDate;
 
-    private PaymentAmount PaymentAmount;
+    private models.requestModels.Payments.PaymentAmount PaymentAmount;
 
     private String ChargeType;
 

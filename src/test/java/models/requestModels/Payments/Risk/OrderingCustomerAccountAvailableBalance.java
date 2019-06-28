@@ -1,4 +1,4 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Risk;
 
 public class OrderingCustomerAccountAvailableBalance {
     private String Amount;

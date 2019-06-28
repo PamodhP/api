@@ -1,4 +1,4 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Risk;
 
 public class OperationsActivityLogging {
     private String PageUrl;
@@ -11,7 +11,7 @@ public class OperationsActivityLogging {
 
     private String InternationalSessionId;
 
-    private OrderingCustomerAccountAvailableBalance OrderingCustomerAccountAvailableBalance;
+    private models.requestModels.Payments.Risk.OrderingCustomerAccountAvailableBalance OrderingCustomerAccountAvailableBalance;
 
     public String getPageUrl() {
         return this.PageUrl;

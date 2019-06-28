@@ -1,19 +1,19 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
 
 public class Initiation {
     private String InstructionIdentification;
 
     private String EndToEndIdentification;
 
-    private InstructedAmount InstructedAmount;
+    private models.requestModels.Payments.Initiation.InstructedAmount InstructedAmount;
 
-    private OrderingCustomerFee OrderingCustomerFee;
+    private models.requestModels.Payments.Initiation.OrderingCustomerFee OrderingCustomerFee;
 
-    private PaymentRelease PaymentRelease;
+    private models.requestModels.Payments.Initiation.PaymentRelease PaymentRelease;
 
-    private PaymentInformation PaymentInformation;
+    private models.requestModels.Payments.Initiation.PaymentInformation PaymentInformation;
 
-    private BeneficiaryDetails BeneficiaryDetails;
+    private models.requestModels.Payments.Initiation.BeneficiaryDetails BeneficiaryDetails;
 
     private OrderingCustomerAccount OrderingCustomerAccount;
 

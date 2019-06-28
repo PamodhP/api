@@ -1,4 +1,6 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
+
+import models.requestModels.Payments.Address;
 
 public class BeneficiaryBank {
     private String SchemeName;
@@ -11,7 +13,7 @@ public class BeneficiaryBank {
 
     private String Name;
 
-    private Address Address;
+    private models.requestModels.Payments.Address Address;
 
     public String getSchemeName() {
         return this.SchemeName;

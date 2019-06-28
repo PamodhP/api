@@ -1,9 +1,11 @@
 package models.requestModels.Payments;
 
+import models.requestModels.Payments.Risk.Risk;
+
 public class PaymentRequest {
     private Data Data;
 
-    private Risk Risk;
+    private models.requestModels.Payments.Risk.Risk Risk;
 
     public Data getData() {
         return this.Data;

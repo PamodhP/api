@@ -1,4 +1,4 @@
-package models.requestModels;
+package models.requestModels.Authentication;
 
 import java.util.List;
 

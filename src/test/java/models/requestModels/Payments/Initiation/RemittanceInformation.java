@@ -1,7 +1,9 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
+
+import models.requestModels.Payments.Reference;
 
 public class RemittanceInformation {
-    private Reference Reference;
+    private models.requestModels.Payments.Reference Reference;
 
     public Reference getReference() {
         return this.Reference;

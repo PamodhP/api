@@ -4,9 +4,13 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
-import models.requestModels.IdentityContext;
+import models.requestModels.Authentication.IdentityContext;
+import models.requestModels.Authentication.PostAuthModel;
 import models.requestModels.Payments.*;
-import models.requestModels.PostAuthModel;
+import models.requestModels.Payments.Initiation.*;
+import models.requestModels.Payments.Risk.OperationsActivityLogging;
+import models.requestModels.Payments.Risk.OrderingCustomerAccountAvailableBalance;
+import models.requestModels.Payments.Risk.Risk;
 import models.responseModels.AuthModel;
 import org.apache.commons.io.IOUtils;
 
@@ -21,8 +25,8 @@ public class BaseAPI {
 
     //String BaseURL = "https://api-test-internal.microservices-nonprod.apif.kiwibank.co.nz";
 
-    String BaseURL = "https://api-test.kiwibank.co.nz";
-
+    Response response;
+    private String BaseURL = "https://api-test.kiwibank.co.nz";
 
     public String getAccessToken() throws IOException {
         RestAssured.baseURI = BaseURL;
@@ -43,7 +47,7 @@ public class BaseAPI {
         httpRequest.header("Content-Type", "application/json");
         FileInputStream fileInputStream = new FileInputStream(new File("./jsonfiles/auth.json"));
         httpRequest.body(IOUtils.toString(fileInputStream, "UTF-8"));
-        Response response = httpRequest.post("ext/v2/auth/token");
+        response = httpRequest.post("ext/v2/auth/token");
         return response;
     }
 
@@ -52,7 +56,7 @@ public class BaseAPI {
         RequestSpecification httpRequest = RestAssured.given();
         httpRequest.header("Content-Type", "application/json");
         httpRequest.header("Authorization", getAccessTokenBaseType(tokenType, accessNumber));
-        Response response = httpRequest.get("api/v1/customers/" + accessNumber);
+        response = httpRequest.get("api/v1/customers/" + accessNumber);
         return response;
     }
 
@@ -79,7 +83,7 @@ public class BaseAPI {
         return "Bearer" + " " + responseBody.getAccess_token();
     }
 
-    public List<String> returnscopes() {
+    private List<String> returnscopes() {
         List<String> scopes = new ArrayList<>();
         scopes.add("customers.read");
         scopes.add("payments.read");
@@ -192,7 +196,7 @@ public class BaseAPI {
 
 
         httpRequest.body(paymentRequest);
-        Response response = httpRequest.post("api/v1/internationalpayments");
+        response = httpRequest.post("api/v1/internationalpayments");
         return response;
 
     }

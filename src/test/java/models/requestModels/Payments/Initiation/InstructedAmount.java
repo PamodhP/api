@@ -1,6 +1,6 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
 
-public class OrderingCustomerFee {
+public class InstructedAmount {
     private String Amount;
 
     private String Currency;
@@ -9,7 +9,7 @@ public class OrderingCustomerFee {
         return this.Amount;
     }
 
-    public OrderingCustomerFee setAmount(String Amount) {
+    public InstructedAmount setAmount(String Amount) {
         this.Amount = Amount;
         return this;
     }
@@ -18,8 +18,9 @@ public class OrderingCustomerFee {
         return this.Currency;
     }
 
-    public OrderingCustomerFee setCurrency(String Currency) {
+    public InstructedAmount setCurrency(String Currency) {
         this.Currency = Currency;
         return this;
     }
 }
+

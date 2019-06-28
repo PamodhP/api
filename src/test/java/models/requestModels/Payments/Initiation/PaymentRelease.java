@@ -1,4 +1,4 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
 
 public class PaymentRelease {
     private boolean ReleasePayment;

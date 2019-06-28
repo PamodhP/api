@@ -1,9 +1,11 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
+
+import models.requestModels.Payments.Address;
 
 public class BeneficiaryDetails {
     private String Identification;
 
-    private Address Address;
+    private models.requestModels.Payments.Address Address;
 
     public String getIdentification() {
         return this.Identification;

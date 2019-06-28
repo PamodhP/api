@@ -1,7 +1,9 @@
 package models.requestModels.Payments;
 
+import models.requestModels.Payments.Initiation.Initiation;
+
 public class Data {
-    private Initiation Initiation;
+    private models.requestModels.Payments.Initiation.Initiation Initiation;
 
     public Initiation getInitiation() {
         return this.Initiation;

@@ -1,6 +1,6 @@
-package models.requestModels.Payments;
+package models.requestModels.Payments.Initiation;
 
-public class BeneficiaryAccount {
+public class OrderingCustomerAccount {
     private String SchemeName;
 
     private String Identification;
@@ -9,7 +9,7 @@ public class BeneficiaryAccount {
         return this.SchemeName;
     }
 
-    public BeneficiaryAccount setSchemeName(String SchemeName) {
+    public OrderingCustomerAccount setSchemeName(String SchemeName) {
         this.SchemeName = SchemeName;
         return this;
     }
@@ -18,7 +18,7 @@ public class BeneficiaryAccount {
         return this.Identification;
     }
 
-    public BeneficiaryAccount setIdentification(String Identification) {
+    public OrderingCustomerAccount setIdentification(String Identification) {
         this.Identification = Identification;
         return this;
     }

@@ -1,4 +1,4 @@
-package models.requestModels;
+package models.requestModels.Authentication;
 
 public class IdentityContext {
     private String originatorId;
