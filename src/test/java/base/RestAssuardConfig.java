@@ -5,17 +5,25 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
+import kiwibank.Verify;
 import models.requestModels.Authentication.IdentityContext;
 import models.requestModels.Authentication.PostAuthModel;
+import models.requestModels.Payments.*;
+import models.requestModels.Payments.Initiation.*;
+import models.requestModels.Payments.Risk.OperationsActivityLogging;
+import models.requestModels.Payments.Risk.OrderingCustomerAccountAvailableBalance;
+import models.requestModels.Payments.Risk.Risk;
 import models.responseModels.AuthModel;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RestAssuardConfig {
 
-    private Response response;
+    protected Response response;
+    protected Verify verify = new Verify();
 
     @BeforeSuite
     public void config() {
@@ -63,4 +71,109 @@ public class RestAssuardConfig {
         scopes.add("customers.international.read");
         return scopes;
     }
+
+    protected Response getPostPaymentSubmissionFramework(RequestSpecification requestSpecification,
+                                                         String tokenType, String accessNumber) {
+
+        UUID uuid = UUID.randomUUID();
+        requestSpecification.header("Authorization", getAccessTokenBaseType(requestSpecification, tokenType, accessNumber));
+        requestSpecification.header("x-idempotency-key", uuid.toString());
+        requestSpecification.header("bypass-cache", true);
+        requestSpecification.header("Content-Type", "application/json");
+
+        PaymentRequest paymentRequest = new PaymentRequest()
+                .setRisk(new Risk()
+                        .setOperationsActivityLogging(new OperationsActivityLogging()
+                                .setPageUrl("http://activity.com/wozhair")
+                                .setLoginIpAddress("127.0.0.1")
+                                .setServerIpAddress("127.0.0.2")
+                                .setKiwibankSessionId("xZhDFS543fVXGHEEHFlkjlkjdr6")
+                                .setInternationalSessionId("HdsfdkjhRSSFRzfkhj764H")
+                                .setOrderingCustomerAccountAvailableBalance(new OrderingCustomerAccountAvailableBalance()
+                                        .setAmount("100")
+                                        .setCurrency("USD"))))
+                .setData(new Data()
+                        .setInitiation(new Initiation()
+                                .setInstructionIdentification("Peush Kiwi")
+                                .setEndToEndIdentification("P013878")
+                                .setInstructedAmount(new InstructedAmount()
+                                        .setAmount("25.00")
+                                        .setCurrency("NZD"))
+                                .setOrderingCustomerFee(new OrderingCustomerFee()
+                                        .setAmount("2.00")
+                                        .setCurrency("NZD"))
+                                .setPaymentRelease(new PaymentRelease()
+                                        .setReleasePayment(true))
+                                .setPaymentInformation(new PaymentInformation()
+                                        .setPaymentType("NZD_Nostro")
+                                        .setPaymentFXContractReference("C111001")
+                                        .setPaymentValueDate("2019-06-24")
+                                        .setPaymentAmount(new PaymentAmount()
+                                                .setAmount("20.00")
+                                                .setCurrency("USD"))
+                                        .setChargeType("SHA"))
+                                .setBeneficiaryDetails(new BeneficiaryDetails()
+                                        .setIdentification("Manual test thourgh API")
+                                        .setAddress(new Address()
+                                                .setAddressLine1("167 Knights Road")
+                                                .setAddressLine2("XXXX")
+                                                .setSuburb("Hutt Central")
+                                                .setCity("Wellington")
+                                                .setState("")
+                                                .setPostalCode("4324535")
+                                                .setCountryName("New Zealand")
+                                                .setCountryCode("NZ")))
+                                .setOrderingCustomerAccount(new OrderingCustomerAccount()
+                                        .setSchemeName("AccountNumber")
+                                        .setIdentification("389006063471802"))
+                                .setBeneficiaryBank(new BeneficiaryBank()
+                                        .setSchemeName("NatBankCode")
+                                        .setIdentification("FW02200321")
+                                        .setSecondaryIdentification("MANTUS33")
+                                        .setSecondarySchemeName("Swift")
+                                        .setName("Westpac Banking Corp")
+                                        .setAddress(new Address()
+                                                .setAddressLine1("55 Errol St")
+                                                .setAddressLine2("")
+                                                .setSuburb("")
+                                                .setCity("Wellington")
+                                                .setState("")
+                                                .setPostalCode("5010")
+                                                .setCountryName("New Zealand")
+                                                .setCountryCode("NZ")))
+                                .setSwiftReceiver(new SwiftReceiver()
+                                        .setSwiftCode("KIWINZ20"))
+                                .setOrderingCustomerDetails(new OrderingCustomerDetails()
+                                        .setIdentification("786504")
+                                        .setClassification("Individual")
+                                        .setName("Tester,Peushan")
+                                        .setAddress(new Address()
+                                                .setAddressLine1("20 customehouse")
+                                                .setAddressLine2("test")
+                                                .setSuburb("central")
+                                                .setCity("Tokiyo")
+                                                .setState("")
+                                                .setPostalCode("6785")
+                                                .setCountryName("Japan")
+                                                .setCountryCode("JPY")))
+                                .setBeneficiaryAccount(new BeneficiaryAccount()
+                                        .setSchemeName("AccountNumber")
+                                        .setIdentification("KIW0001978"))
+                                .setRemittanceInformation(new RemittanceInformation()
+                                        .setReference(new Reference()
+                                                .setBeneficiaryReference(new BeneficiaryReference()
+                                                        .setPaymentDetailsLine1("Test on 5th De")
+                                                        .setPaymentDetailsLine2("878sa")
+                                                        .setPaymentDetailsLine3("test")
+                                                        .setPaymentDetailsLine4(""))
+                                                .setDomesticOrderingCustomerReference(new DomesticOrderingCustomerReference()
+                                                        .setForeignExchangeDealRate("0.67114"))))));
+
+
+        requestSpecification.body(paymentRequest);
+        response = requestSpecification.post("api/v1/internationalpayments");
+        return response;
+
+    }
+
 }
