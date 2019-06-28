@@ -49,6 +49,7 @@ public class PaymentsTests extends BaseAPI {
     @Test
     public void paymentSubmissionTest() {
         Response response = getPostPaymentSubmission(Constants.STAFF, "786504");
+        verify.StatusCodeShouldHave(response, 201);
         System.out.println(response.getStatusCode());
     }
 }
