@@ -8,6 +8,8 @@ import io.restassured.specification.RequestSpecification;
 import kiwibank.Verify;
 import models.requestModels.Authentication.IdentityContext;
 import models.requestModels.Authentication.PostAuthModel;
+import models.requestModels.PaymentAuth.Authority;
+import models.requestModels.PaymentAuth.PaymentAuth;
 import models.requestModels.Payments.*;
 import models.requestModels.Payments.Initiation.*;
 import models.requestModels.Payments.Risk.OperationsActivityLogging;
@@ -176,4 +178,36 @@ public class RestAssuardConfig {
 
     }
 
+
+    protected Response postAuthSubmission(RequestSpecification requestSpecification,
+                                          String tokenType, String accessNumber) {
+
+        UUID uuid = UUID.randomUUID();
+        requestSpecification.header("Authorization", getAccessTokenBaseType(requestSpecification, tokenType, accessNumber));
+        requestSpecification.header("x-fapi-interaction-id", uuid.toString());
+        requestSpecification.header("x-idempotency-key", uuid.toString());
+        requestSpecification.header("bypass-cache", true);
+        requestSpecification.header("Content-Type", "application/json");
+
+        PaymentAuth paymentAuth = new PaymentAuth()
+                .setData(new models.requestModels.PaymentAuth.Data()
+                        .setPaymentContractReference("P11212")
+                        .setOrderingCustomerAccountIdentification("029698802")
+                        .setOriginatorId(accessNumber)
+                        .setOrderingCustomerName("Peushan Test")
+                        .setAuthorities(returnAuthorities()));
+
+
+        requestSpecification.body(paymentAuth);
+        response = requestSpecification.post("/api/international/v1/payment-authorisations");
+        return response;
+
+    }
+
+    private List<Authority> returnAuthorities() {
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(new Authority().setCustomerId("100"));
+        authorities.add(new Authority().setCustomerId("200"));
+        return authorities;
+    }
 }

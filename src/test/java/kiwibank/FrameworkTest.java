@@ -10,7 +10,7 @@ import testData.Scnearios;
 public class FrameworkTest extends RestAssuardConfig {
 
     @Test(dataProvider = "ProvideAccessNumbers", dataProviderClass = Scnearios.class)
-    public void withFrameworkCustomer(String customerType, String accessNumber) {
+    public void withFrameworkGetCustomer(String customerType, String accessNumber) {
         RequestSpecification requestSpecification = new RestAssuardConfig().getRequestSpecification();
         response = getCustomerCallFramework(requestSpecification, Constants.STAFF, accessNumber);
         verify.StatusCodeShouldHave(response, HttpStatus.SC_OK);
@@ -19,11 +19,19 @@ public class FrameworkTest extends RestAssuardConfig {
     }
 
     @Test(dataProvider = "ProvideAccessNumbers", dataProviderClass = Scnearios.class)
-    public void getPostPaymentSubmission(String customerType, String accessNumber) {
+    public void postPaymentSubmission(String customerType, String accessNumber) {
         RequestSpecification requestSpecification = new RestAssuardConfig().getRequestSpecification();
         response = getPostPaymentSubmissionFramework(requestSpecification, Constants.STAFF, accessNumber);
         verify.StatusCodeShouldHave(response, HttpStatus.SC_CREATED);
         verify.VerifyPostSubmission(response);
+        response.then().log().all();
+    }
+
+    @Test
+    public void paymentAuthSubmission() {
+        RequestSpecification requestSpecification = new RestAssuardConfig().getRequestSpecification();
+        response = postAuthSubmission(requestSpecification, Constants.STAFF, "786504");
+        verify.StatusCodeShouldHave(response, HttpStatus.SC_CREATED);
         response.then().log().all();
 
     }
